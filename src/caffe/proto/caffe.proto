@@ -679,13 +679,17 @@ message FastHDF5InputParameter {
   // Specify the data source.
   optional string source = 1;
   // Specify the batch size. If none is specified use hdf5 file's batch size
-  optional int32 batch_size= 2;
+  optional int32 batch_size = 2;
+  // Specify the group name in the hdf5 file for each top and bottom
+  repeated string group_name = 3;
 }
 message FastHDF5OutputParameter {
   // Specify the data source.
   optional string file_name = 1;
   // Specify the batch size.
   optional StorageFormat storage = 2 [default = FLOAT16];
+  // Specify the group name in the hdf5 file for each top and bottom
+  repeated string group_name = 3;
 }
 
 /// Message that stores parameters used by FlattenLayer

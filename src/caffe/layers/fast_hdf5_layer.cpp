@@ -87,6 +87,8 @@ void FastHDF5OutputLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
   groups_.clear();
   for (int i = 0; i < bottom.size(); i++) {
     std::string n = "/"+unSplit(this->layer_param_.bottom(i));
+    if (i < param.group_name_size())
+      n = param.group_name(i);
     hid_t g = H5Gcreate(file_id_, n.c_str(), H5P_DEFAULT, H5P_DEFAULT,
                         H5P_DEFAULT);
     groups_.push_back(g);
@@ -269,6 +271,8 @@ void StaticHDF5InputLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
   // Load the different groups
   for (int i = 0; i < top.size(); i++) {
     std::string n = this->layer_param_.top(i);
+    if (i < param.group_name_size())
+      n = param.group_name(i);
     CHECK(hdf5_exists(fid, n.c_str())) << "Dataset '" << n << "' not found!";
 
     int type = 0;
@@ -340,6 +344,8 @@ void FastHDF5InputLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
   groups_.clear();
   for (int i = 0; i < top.size(); i++) {
     std::string n = "/"+this->layer_param_.top(i);
+    if (i < param.group_name_size())
+      n = param.group_name(i);
     hid_t g = H5Gopen(file_id_, n.c_str(), H5P_DEFAULT);
     CHECK_GE(g, 0) << "Group '" << n << "' not found!";
     groups_.push_back(g);
