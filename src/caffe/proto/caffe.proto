@@ -306,7 +306,7 @@ message ParamSpec {
 // NOTE
 // Update the next available ID when you add a new LayerParameter field.
 //
-// LayerParameter next available layer-specific ID: 143 (last added: scale_param)
+// LayerParameter next available layer-specific ID: 144 (last added: contrastive_loss_dense_param)
 message LayerParameter {
   optional string name = 1; // the layer name
   optional string type = 2; // the layer type
@@ -394,6 +394,7 @@ message LayerParameter {
   optional ThresholdParameter threshold_param = 128;
   optional TileParameter tile_param = 138;
   optional WindowDataParameter window_data_param = 129;
+  optional ContrastiveLossDenseParameter contrastive_loss_dense_param = 143;
 }
 
 // Message that stores parameters used to apply transformation
@@ -543,6 +544,12 @@ message ContrastiveLossParameter {
   // reproduce existing models and results
   optional bool legacy_version = 2 [default = false];
 }
+
+message ContrastiveLossDenseParameter {
+  // margin for dissimilar pair
+  optional float margin = 1 [default = 1.0];
+}
+
 
 message ConvolutionParameter {
   optional uint32 num_output = 1; // The number of outputs for the layer
