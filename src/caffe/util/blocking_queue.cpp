@@ -4,6 +4,7 @@
 #include "caffe/data_reader.hpp"
 #include "caffe/layers/base_data_layer.hpp"
 #include "caffe/layers/transforming_fast_hdf5_layer.hpp"
+#include "caffe/layers/fast_hdf5_layer.hpp"
 #include "caffe/parallel.hpp"
 #include "caffe/util/blocking_queue.hpp"
 
@@ -91,6 +92,8 @@ template class BlockingQueue<Batch<float>*>;
 template class BlockingQueue<Batch<double>*>;
 template class BlockingQueue<TransformingFastHDF5InputLayer<float>::Batch*>;
 template class BlockingQueue<TransformingFastHDF5InputLayer<double>::Batch*>;
+template class BlockingQueue<FastHDF5InputLayer<float>::Batch*>;
+template class BlockingQueue<FastHDF5InputLayer<double>::Batch*>;
 template class BlockingQueue<Datum*>;
 template class BlockingQueue<shared_ptr<DataReader::QueuePair> >;
 template class BlockingQueue<P2PSync<float>*>;

@@ -367,6 +367,8 @@ message LayerParameter {
   optional ELUParameter elu_param = 140;
   optional EmbedParameter embed_param = 137;
   optional ExpParameter exp_param = 111;
+  optional FastHDF5InputParameter fast_hdf5_input_param = 1001;
+  optional FastHDF5OutputParameter fast_hdf5_output_param = 1002;
   optional FlattenParameter flatten_param = 135;
   optional HDF5DataParameter hdf5_data_param = 112;
   optional HDF5OutputParameter hdf5_output_param = 113;
@@ -705,6 +707,30 @@ message ExpParameter {
   optional float base = 1 [default = -1.0];
   optional float scale = 2 [default = 1.0];
   optional float shift = 3 [default = 0.0];
+}
+
+// Allow 2 different precicions for storage
+enum StorageFormat {
+  FLOAT16 = 0;
+  FLOAT32 = 1;
+  UINT8 = 2;
+}
+// Message that stores parameters used by FastHDF5DataInputLayer
+message FastHDF5InputParameter {
+  // Specify the data source.
+  optional string source = 1;
+  // Specify the batch size. If none is specified use hdf5 file's batch size
+  optional int32 batch_size = 2;
+  // Specify the group name in the hdf5 file for each top and bottom
+  repeated string group_name = 3;
+}
+message FastHDF5OutputParameter {
+  // Specify the data source.
+  optional string file_name = 1;
+  // Specify the batch size.
+  optional StorageFormat storage = 2 [default = FLOAT16];
+  // Specify the group name in the hdf5 file for each top and bottom
+  repeated string group_name = 3;
 }
 
 /// Message that stores parameters used by FlattenLayer
