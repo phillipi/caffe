@@ -420,6 +420,13 @@ message TransformationParameter {
   optional bool force_color = 6 [default = false];
   // Force the decoded image to have 1 color channels.
   optional bool force_gray = 7 [default = false];
+  // Allow for scaling transformation
+  optional float min_scale = 8 [default = 1];
+  optional float max_scale = 9 [default = 1];
+  // Allow for rotations
+  optional bool rotate = 10 [default = false];
+  // Synchronize the transformation along the num dimension
+  optional bool synchronized = 11 [default = false];
 }
 
 // Message that stores parameters shared by loss layers
