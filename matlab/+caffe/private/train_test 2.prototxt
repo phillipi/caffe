@@ -1,0 +1,1071 @@
+name: "DeepAssociationsNet"
+force_backward: true
+layer {
+  name: "C"
+  type: "HDF5Data"
+  top: "C"
+  hdf5_data_param {
+    source: "/data/efros/isola/structured_prediction/aerial_net4_pairwise/train/C.txt"
+    batch_size: 8
+  }
+  include: { phase: TRAIN }
+}
+layer {
+  name: "data_A"
+  type: "HDF5Data"
+  top: "data_A"
+  hdf5_data_param {
+    source: "/data/efros/isola/structured_prediction/aerial_net4_pairwise/train/A.txt"
+    batch_size: 8
+  }
+  include: { phase: TRAIN }
+}
+layer {
+  name: "data_B"
+  type: "HDF5Data"
+  top: "data_B"
+  hdf5_data_param {
+    source: "/data/efros/isola/structured_prediction/aerial_net4_pairwise/train/B.txt"
+    batch_size: 8
+  }
+  include: { phase: TRAIN }
+}
+
+layer {
+  name: "data_A"
+  type: "HDF5Data"
+  top: "data_A"
+  hdf5_data_param {
+    source: "/data/efros/isola/structured_prediction/aerial_net4_pairwise/test/A.txt"
+    batch_size: 8
+  }
+  include: { phase: TEST }
+}
+layer {
+  name: "data_B"
+  type: "HDF5Data"
+  top: "data_B"
+  hdf5_data_param {
+    source: "/data/efros/isola/structured_prediction/aerial_net4_pairwise/test/B.txt"
+    batch_size: 8
+  }
+  include: { phase: TEST }
+}
+layer {
+  name: "C"
+  type: "HDF5Data"
+  top: "C"
+  hdf5_data_param {
+    source: "/data/efros/isola/structured_prediction/aerial_net4_pairwise/test/C.txt"
+    batch_size: 8
+  }
+  include: { phase: TEST }
+}
+
+
+
+layer {
+  name: "conv1_1_A"
+  type: "Convolution"
+  bottom: "data_A"
+  top: "conv1_1_A"
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu1_1_A"
+  type: "ReLU"
+  bottom: "conv1_1_A"
+  top: "conv1_1_A"
+}
+layer {
+  name: "conv1_2_A"
+  type: "Convolution"
+  bottom: "conv1_1_A"
+  top: "conv1_2_A"
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+    stride: 2
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu1_2_A"
+  type: "ReLU"
+  bottom: "conv1_2_A"
+  top: "conv1_2_A"
+}
+layer {
+  name: "conv2_1_A"
+  type: "Convolution"
+  bottom: "conv1_2_A"
+  top: "conv2_1_A"
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu2_1_A"
+  type: "ReLU"
+  bottom: "conv2_1_A"
+  top: "conv2_1_A"
+}
+layer {
+  name: "conv2_2_A"
+  type: "Convolution"
+  bottom: "conv2_1_A"
+  top: "conv2_2_A"
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+    stride: 2
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu2_2_A"
+  type: "ReLU"
+  bottom: "conv2_2_A"
+  top: "conv2_2_A"
+}
+layer {
+  name: "conv3_1_A"
+  type: "Convolution"
+  bottom: "conv2_2_A"
+  top: "conv3_1_A"
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu3_1_A"
+  type: "ReLU"
+  bottom: "conv3_1_A"
+  top: "conv3_1_A"
+}
+layer {
+  name: "conv3_2_A"
+  type: "Convolution"
+  bottom: "conv3_1_A"
+  top: "conv3_2_A"
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu3_2_A"
+  type: "ReLU"
+  bottom: "conv3_2_A"
+  top: "conv3_2_A"
+}
+layer {
+  name: "conv3_3_A"
+  type: "Convolution"
+  bottom: "conv3_2_A"
+  top: "conv3_3_A"
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+    stride: 2
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu3_3_A"
+  type: "ReLU"
+  bottom: "conv3_3_A"
+  top: "conv3_3_A"
+}
+layer {
+  name: "conv4_1_A"
+  type: "Convolution"
+  bottom: "conv3_3_A"
+  top: "conv4_1_A"
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu4_1_A"
+  type: "ReLU"
+  bottom: "conv4_1_A"
+  top: "conv4_1_A"
+}
+layer {
+  name: "conv4_2_A"
+  type: "Convolution"
+  bottom: "conv4_1_A"
+  top: "conv4_2_A"
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu4_2_A"
+  type: "ReLU"
+  bottom: "conv4_2_A"
+  top: "conv4_2_A"
+}
+layer {
+  name: "conv4_3_A"
+  type: "Convolution"
+  bottom: "conv4_2_A"
+  top: "conv4_3_A"
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu4_3_A"
+  type: "ReLU"
+  bottom: "conv4_3_A"
+  top: "conv4_3_A"
+}
+
+
+#layer {
+#  name: "readout1_A"
+#  type: "Convolution"
+#  bottom: "conv1_2_A"
+#  top: "readout1_A"
+#  convolution_param {
+#    num_output: 3
+#    pad: 0
+#    kernel_size: 1
+#    weight_filler {
+#      type: "xavier"
+#    }
+#    bias_filler {
+#      type: "constant"
+#    }
+#  }
+#}
+#layer {
+#  name: "readout1norm_A"
+#  type: "BatchNorm"
+#  bottom: "readout1_A"
+#  top: "readout1norm_A"
+#  batch_norm_param{ }
+#  param {lr_mult: 0 decay_mult: 0}
+#  param {lr_mult: 0 decay_mult: 0}
+#  param {lr_mult: 0 decay_mult: 0}
+#}
+#layer {
+#  name: "readout2_A"
+#  type: "Convolution"
+#  bottom: "conv2_2_A"
+#  top: "readout2_A"
+#  convolution_param {
+#    num_output: 3
+#    pad: 0
+#    kernel_size: 1
+#    weight_filler {
+#      type: "xavier"
+#    }
+#    bias_filler {
+#      type: "constant"
+#    }
+#  }
+#}
+#layer {
+#  name: "readout2norm_A"
+#  type: "BatchNorm"
+#  bottom: "readout2_A"
+#  top: "readout2norm_A"
+#  batch_norm_param{ }
+#  param {lr_mult: 0 decay_mult: 0}
+#  param {lr_mult: 0 decay_mult: 0}
+#  param {lr_mult: 0 decay_mult: 0}
+#}
+#layer {
+#  name: "readout3_A"
+#  type: "Convolution"
+#  bottom: "conv3_3_A"
+#  top: "readout3_A"
+#  convolution_param {
+#    num_output: 3
+#    pad: 0
+#    kernel_size: 1
+#    weight_filler {
+#      type: "xavier"
+#    }
+#    bias_filler {
+#      type: "constant"
+#    }
+#  }
+#}
+#layer {
+#  name: "readout3norm_A"
+#  type: "BatchNorm"
+#  bottom: "readout3_A"
+#  top: "readout3norm_A"
+#  batch_norm_param{ }
+#  param {lr_mult: 0 decay_mult: 0}
+#  param {lr_mult: 0 decay_mult: 0}
+#  param {lr_mult: 0 decay_mult: 0}
+#}
+layer {
+  name: "readout4_A"
+  type: "Convolution"
+  bottom: "conv4_3_A"
+  top: "readout4_A"
+  convolution_param {
+    num_output: 10
+    pad: 0
+    kernel_size: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+#layer {
+#	name: "debug_A"
+#	type: "AbsVal"
+#	bottom: "readout4_A"
+#	top: "debug_A"
+#}
+
+#layer {
+#  name: "readout4norm_A"
+#  type: "BatchNorm"
+#  bottom: "readout4_A"
+#  top: "readout4norm_A"
+#  batch_norm_param{ }
+#  param {lr_mult: 0 decay_mult: 0}
+#  param {lr_mult: 0 decay_mult: 0}
+#  param {lr_mult: 0 decay_mult: 0}
+#}
+
+#layer {
+#	name: "sq4_A"
+#	type: "Power"
+#	bottom: "readout4_A"
+#	top: "sq4_A"
+#    power_param {
+#      power: 2
+#      scale: 1
+#      shift: 0
+#    }
+#}
+#layer {
+#  name: "sum4_A"
+#  type: "Convolution"
+#  bottom: "sq4_A"
+#  top: "sum4_A"
+#  param {lr_mult: 0 decay_mult: 0}
+#  convolution_param {
+#    num_output: 1
+#    bias_term: false
+#    kernel_size: 1
+#    weight_filler {
+#      type: 'constant'
+#      value: 1
+#    }
+#  }
+#}
+#layer {
+#    name: "sqrt4_A"
+#    type: "Power"
+#    bottom: "sum4_A"
+#    top: "sqrt4_A"
+#    power_param {
+#      power: -0.5
+#      scale: 1
+#      shift: 0
+#    }
+#}
+#layer {
+#	name: "tiled4_A"
+#	type: "Tile"
+#	bottom: "sqrt4_A"
+#	top: "tiled4_A"
+#	tile_param {
+#		axis: 1 # 0 indexed, so this is the second axis
+#		tiles: 10
+#	}
+#}
+#layer {
+#	name: "readout4norm_A"
+#	type: "Eltwise"
+#	bottom: "readout4_A"
+#	bottom: "tiled4_A"
+#	top: "readout4norm_A"
+#	eltwise_param {
+#		operation: PROD
+#	}
+#}
+
+
+layer {
+  name: "conv1_1_B"
+  type: "Convolution"
+  bottom: "data_B"
+  top: "conv1_1_B"
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu1_1_B"
+  type: "ReLU"
+  bottom: "conv1_1_B"
+  top: "conv1_1_B"
+}
+layer {
+  name: "conv1_2_B"
+  type: "Convolution"
+  bottom: "conv1_1_B"
+  top: "conv1_2_B"
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+    stride: 2
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu1_2_B"
+  type: "ReLU"
+  bottom: "conv1_2_B"
+  top: "conv1_2_B"
+}
+layer {
+  name: "conv2_1_B"
+  type: "Convolution"
+  bottom: "conv1_2_B"
+  top: "conv2_1_B"
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu2_1_B"
+  type: "ReLU"
+  bottom: "conv2_1_B"
+  top: "conv2_1_B"
+}
+layer {
+  name: "conv2_2_B"
+  type: "Convolution"
+  bottom: "conv2_1_B"
+  top: "conv2_2_B"
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+    stride: 2
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu2_2_B"
+  type: "ReLU"
+  bottom: "conv2_2_B"
+  top: "conv2_2_B"
+}
+layer {
+  name: "conv3_1_B"
+  type: "Convolution"
+  bottom: "conv2_2_B"
+  top: "conv3_1_B"
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu3_1_B"
+  type: "ReLU"
+  bottom: "conv3_1_B"
+  top: "conv3_1_B"
+}
+layer {
+  name: "conv3_2_B"
+  type: "Convolution"
+  bottom: "conv3_1_B"
+  top: "conv3_2_B"
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu3_2_B"
+  type: "ReLU"
+  bottom: "conv3_2_B"
+  top: "conv3_2_B"
+}
+layer {
+  name: "conv3_3_B"
+  type: "Convolution"
+  bottom: "conv3_2_B"
+  top: "conv3_3_B"
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+    stride: 2
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu3_3_B"
+  type: "ReLU"
+  bottom: "conv3_3_B"
+  top: "conv3_3_B"
+}
+layer {
+  name: "conv4_1_B"
+  type: "Convolution"
+  bottom: "conv3_3_B"
+  top: "conv4_1_B"
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu4_1_B"
+  type: "ReLU"
+  bottom: "conv4_1_B"
+  top: "conv4_1_B"
+}
+layer {
+  name: "conv4_2_B"
+  type: "Convolution"
+  bottom: "conv4_1_B"
+  top: "conv4_2_B"
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu4_2_B"
+  type: "ReLU"
+  bottom: "conv4_2_B"
+  top: "conv4_2_B"
+}
+layer {
+  name: "conv4_3_B"
+  type: "Convolution"
+  bottom: "conv4_2_B"
+  top: "conv4_3_B"
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+  # learning rate and decay multipliers for the filters
+  #param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  #param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "relu4_3_B"
+  type: "ReLU"
+  bottom: "conv4_3_B"
+  top: "conv4_3_B"
+}
+
+
+#layer {
+#  name: "readout1_B"
+#  type: "Convolution"
+#  bottom: "conv1_2_B"
+#  top: "readout1_B"
+#  convolution_param {
+#    num_output: 3
+#    pad: 0
+#    kernel_size: 1
+#    weight_filler {
+#      type: "xavier"
+#    }
+#    bias_filler {
+#      type: "constant"
+#    }
+#  }
+#}
+#layer {
+#  name: "readout1norm_B"
+#  type: "BatchNorm"
+#  bottom: "readout1_B"
+#  top: "readout1norm_B"
+#  batch_norm_param{ }
+#  param {lr_mult: 0 decay_mult: 0}
+#  param {lr_mult: 0 decay_mult: 0}
+#  param {lr_mult: 0 decay_mult: 0}
+#}
+#layer {
+#  name: "readout2_B"
+#  type: "Convolution"
+#  bottom: "conv2_2_B"
+#  top: "readout2_B"
+#  convolution_param {
+#    num_output: 3
+#    pad: 0
+#    kernel_size: 1
+#    weight_filler {
+#      type: "xavier"
+#    }
+#    bias_filler {
+#      type: "constant"
+#    }
+#  }
+#}
+#layer {
+#  name: "readout2norm_B"
+#  type: "BatchNorm"
+#  bottom: "readout2_B"
+#  top: "readout2norm_B"
+#  batch_norm_param{ }
+#  param {lr_mult: 0 decay_mult: 0}
+#  param {lr_mult: 0 decay_mult: 0}
+#  param {lr_mult: 0 decay_mult: 0}
+#}
+#layer {
+#  name: "readout3_B"
+#  type: "Convolution"
+#  bottom: "conv3_3_B"
+#  top: "readout3_B"
+#  convolution_param {
+#    num_output: 3
+#    pad: 0
+#    kernel_size: 1
+#    weight_filler {
+#      type: "xavier"
+#    }
+#    bias_filler {
+#      type: "constant"
+#    }
+#  }
+#}
+#layer {
+#  name: "readout3norm_B"
+#  type: "BatchNorm"
+#  bottom: "readout3_B"
+#  top: "readout3norm_B"
+#  batch_norm_param{ }
+#  param {lr_mult: 0 decay_mult: 0}
+#  param {lr_mult: 0 decay_mult: 0}
+#  param {lr_mult: 0 decay_mult: 0}
+#}
+layer {
+  name: "readout4_B"
+  type: "Convolution"
+  bottom: "conv4_3_B"
+  top: "readout4_B"
+  convolution_param {
+    num_output: 10
+    pad: 0
+    kernel_size: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+#layer {
+#	name: "debug_B"
+#	type: "AbsVal"
+#	bottom: "readout4_B"
+#	top: "debug_B"
+#}
+
+#layer {
+#  name: "readout4norm_B"
+#  type: "BatchNorm"
+#  bottom: "readout4_B"
+#  top: "readout4norm_B"
+#  batch_norm_param{ }
+#  param {lr_mult: 0 decay_mult: 0}
+#  param {lr_mult: 0 decay_mult: 0}
+#  param {lr_mult: 0 decay_mult: 0}
+#}
+
+#layer {
+#	name: "sq4_B"
+#	type: "Power"
+#	bottom: "readout4_B"
+#	top: "sq4_B"
+#    power_param {
+#      power: 2
+#      scale: 1
+#      shift: 0
+#    }
+#}
+#layer {
+#  name: "sum4_B"
+#  type: "Convolution"
+#  bottom: "sq4_B"
+#  top: "sum4_B"
+#  param {lr_mult: 0 decay_mult: 0}
+#  convolution_param {
+#    num_output: 1
+#    bias_term: false
+#    kernel_size: 1
+#    weight_filler {
+#      type: 'constant'
+#      value: 1
+#    }
+#  }
+#}
+#layer {
+#    name: "sqrt4_B"
+#    type: "Power"
+#    bottom: "sum4_B"
+#    top: "sqrt4_B"
+#    power_param {
+#      power: -0.5
+#      scale: 1
+#      shift: 0
+#    }
+#}
+#layer {
+#	name: "tiled4_B"
+#	type: "Tile"
+#	bottom: "sqrt4_B"
+#	top: "tiled4_B"
+#	tile_param {
+#		axis: 1 # 0 indexed, so this is the second axis
+#		tiles: 10
+#	}
+#}
+#layer {
+#	name: "readout4norm_B"
+#	type: "Eltwise"
+#	bottom: "readout4_B"
+#	bottom: "tiled4_B"
+#	top: "readout4norm_B"
+#	eltwise_param {
+#		operation: PROD
+#	}
+#}
+
+
+
+
+layer {
+    name: "neg_readout4_B"
+    type: "Power"
+    bottom: "readout4_B"
+    top: "neg_readout4_B"
+    power_param {
+      power: 1
+      scale: -1
+      shift: 0
+    }
+}
+layer {
+	name: "signed_d"
+	type: "Eltwise"
+	bottom: "readout4_A"
+	bottom: "neg_readout4_B"
+	top: "signed_d"
+	eltwise_param {
+		operation: SUM
+	}
+}
+layer {
+	name: "d"
+	type: "AbsVal"
+	bottom: "signed_d"
+	top: "d"
+}
+layer {
+  name: "sum_d"
+  type: "Convolution"
+  bottom: "d"
+  top: "sum_d"
+  convolution_param {
+    num_output: 1
+    pad: 0
+    kernel_size: 1
+    weight_filler {
+      #type: "xavier"
+	  type: "constant"
+	  value: -1
+    }
+    bias_filler {
+      type: "constant"
+	  value: 0
+    }
+  }
+  # learning rate and decay multipliers for the filters
+  param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  param { lr_mult: 0 decay_mult: 0 }
+}
+layer {
+  name: "sum_d_scaled"
+  type: "Convolution"
+  bottom: "sum_d"
+  top: "sum_d_scaled"
+  convolution_param {
+    num_output: 1
+    pad: 0
+    kernel_size: 1
+    weight_filler {
+      #type: "xavier"
+	  type: "constant"
+	  value: 1
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+  # learning rate and decay multipliers for the filters
+  param { lr_mult: 0 decay_mult: 0 }
+  # learning rate and decay multipliers for the biases
+  param { lr_mult: 1 decay_mult: 1 }
+}
+
+
+#layer {
+#	name: "flat1_A"
+#	type: "Flatten"
+#	bottom: "readout1norm_A"
+#	top: "flat1_A"
+#}
+#layer {
+#	name: "flat2_A"
+#	type: "Flatten"
+#	bottom: "readout2norm_A"
+#	top: "flat2_A"
+#}
+#layer {
+#	name: "flat3_A"
+#	type: "Flatten"
+#	bottom: "readout3norm_A"
+#	top: "flat3_A"
+#}
+#layer {
+#	name: "flat4_A"
+#	type: "Flatten"
+#	bottom: "readout4norm_A"
+#	top: "flat4_A"
+#}
+#layer {
+#	name: "flat1_B"
+#	type: "Flatten"
+#	bottom: "readout1norm_B"
+#	top: "flat1_B"
+#}
+#layer {
+#	name: "flat2_B"
+#	type: "Flatten"
+#	bottom: "readout2norm_B"
+#	top: "flat2_B"
+#}
+#layer {
+#	name: "flat3_B"
+#	type: "Flatten"
+#	bottom: "readout3norm_B"
+#	top: "flat3_B"
+#}
+#layer {
+#	name: "flat4_B"
+#	type: "Flatten"
+#	bottom: "readout4norm_B"
+#	top: "flat4_B"
+#}
+
+
+
+
+#layer {
+#	name: "loss1"
+#	type: "ContrastiveLoss"
+#	bottom: "flat1_A"
+#	bottom: "flat1_B"
+#	bottom: "C"
+#	top: "loss1"
+#	contrastive_loss_param {
+#		margin: 2 # 2 makes this cosine loss when f_A and f_B are normalized
+#	}
+#	loss_weight: 0.25
+#}
+#layer {
+#	name: "loss2"
+#	type: "ContrastiveLoss"
+#	bottom: "flat2_A"
+#	bottom: "flat2_B"
+#	bottom: "C"
+#	top: "loss2"
+#	contrastive_loss_param {
+#		margin: 2 # 2 makes this cosine loss when f_A and f_B are normalized
+#	}
+#	loss_weight: 0.25
+#}
+#layer {
+#	name: "loss3"
+#	type: "ContrastiveLoss"
+#	bottom: "flat3_A"
+#	bottom: "flat3_B"
+#	bottom: "C"
+#	top: "loss3"
+#	contrastive_loss_param {
+#		margin: 2 # 2 makes this cosine loss when f_A and f_B are normalized
+#	}
+#	loss_weight: 0.25
+#}
+
+layer { 
+	name: "C_reshaped"
+	type: "Reshape"
+	bottom: "C"
+	top: "C_reshaped"
+	reshape_param {
+		shape {
+			dim: 0
+			dim: 0
+			dim: 1
+			dim: 1
+		}
+	}
+}
+layer {
+	name: "C_tiled"
+	type: "Tile"
+	bottom: "C_reshaped"
+	top: "C_tiled"
+	tile_param {
+		axis: 2
+		tiles: 32
+	}
+}
+layer {
+	name: "C_tiled2"
+	type: "Tile"
+	bottom: "C_tiled"
+	top: "C_tiled2"
+	tile_param {
+		axis: 3
+		tiles: 32
+	}
+}
+
+layer {
+	name: "loss4"
+	type: "SigmoidCrossEntropyLoss"
+	bottom: "sum_d_scaled"
+	bottom: "C_tiled2"
+	top: "loss4"
+	loss_weight: 1
+}
+
+#layer {
+#	name: "loss4"
+#	type: "ContrastiveLoss"
+#	bottom: "readout4norm_A"
+#	bottom: "readout4norm_B"
+#	bottom: "C_tiled2"
+#	top: "loss4"
+#	contrastive_loss_param {
+#		margin: 2 # 2 makes this cosine loss when f_A and f_B are normalized
+#	}
+#	loss_weight: 1
+#}

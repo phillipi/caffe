@@ -339,6 +339,7 @@ void FastHDF5InputLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
   FastHDF5InputParameter param = this->layer_param_.fast_hdf5_input_param();
   std::string source = param.source();
   file_id_ = H5Fopen(source.c_str(), H5F_ACC_RDONLY, H5P_DEFAULT);
+  CHECK_GE(file_id_, 0) << "File '" << source.c_str << "' not found!";
 
   // Load the different groups
   groups_.clear();
